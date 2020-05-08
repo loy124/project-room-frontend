@@ -427,8 +427,8 @@ export default {
       filesPreview: [],
       date: new Date(),
       uploadImageIndex: 0, // 이미지 업로드를 위한 변수
-      latitude : 0.0, //위도
-      longitude : 0.0 //경도
+      latitude: 0.0, //위도
+      longitude: 0.0 //경도
     };
   },
   watch: {
@@ -630,8 +630,8 @@ export default {
 
       let params = new URLSearchParams();
 
-      params.append('latitude', this.latitude);
-      params.append('longitude', this.longitude);
+      params.append("latitude", this.latitude);
+      params.append("longitude", this.longitude);
 
       params.append("title", this.title);
       params.append("content", this.content);
@@ -672,13 +672,15 @@ export default {
       } /* else if ((!this.monthRent && !this.deposit) || !this.lease) {
         error("보증금 + 월세 혹은 전세를 입력하세요 ", this);
         return;
-      } */else if (!this.roomSpace) {
+      } */ else if (
+        !this.roomSpace
+      ) {
         error("전용면적을 입력하세요", this);
         return;
       } else if (!this.supplySpace) {
         error("공급면적을 입력하세요", this);
         return;
-      } else if (this.files.length < 3) {
+      } else if (this.files.length < 4) {
         error("최소 3장의 사진을 업로드 하세요", this);
         return;
       }
@@ -696,23 +698,28 @@ export default {
             requestFile("post", "room/upload", params)
               .then(response => {
                 if (response !== "FAIL") {
-                  this.$toasted.show(`글 작성이 완료되었습니다`, {
-                    type: "success",
-                    position: "top-right",
-                    duration: 2500,
-                    singleton: true
-                  });
-                  if (this.$route.path !== "/") {
-                    this.$router.push("/");
-                  }
                 } else {
                   error("글 작성에 실패했습니다", this);
                 }
               })
+              .then(res => {})
               .catch(error => {
                 console.log(error);
               });
           }
+          let params = new URLSearchParams();
+          params.append("id", this.loginData.id);
+          request("post", "broker/updateWriteCount", params).then(res => {
+            this.$toasted.show(`글 작성이 완료되었습니다`, {
+              type: "success",
+              position: "top-right",
+              duration: 2500,
+              singleton: true
+            });
+            if (this.$route.path !== "/") {
+              this.$router.push("/");
+            }
+          });
         });
       // .then((res) => {
       //   console.log(res);

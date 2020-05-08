@@ -41,9 +41,9 @@
           v-if="loginData.auth === '4' || loginData.auth === '5'"
           class="header-menu-item header-menu-item3"
         >
-          <router-link style="border: none;" class="room-selector1" :to="`/sellRoom`">
-            <button>방내놓기</button>
-          </router-link>
+          <!-- <router-link style="border: none;" class="room-selector1" :to="`/sellRoom`"> -->
+          <button @click="moveWrite">방내놓기</button>
+          <!-- </router-link> -->
         </div>
         <div
           v-if="loginData.auth === '4' || loginData.auth === '5'"
@@ -118,6 +118,14 @@ export default {
       //중복 이동 방지
       if (this.$route.path !== "/") {
         this.$router.push("/");
+      }
+    },
+    moveWrite() {
+      if (!this.loginData.write_count && this.loginData.write_count <= 0) {
+        alert("가능한 글쓰기 횟수가없습니다 결제페이지로 이동합니다.");
+        this.$router.push("/mypage/payment");
+      } else {
+        this.$router.push("/sellRoom");
       }
     }
   }

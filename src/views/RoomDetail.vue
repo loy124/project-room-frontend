@@ -278,7 +278,7 @@
           </div>
 
           <div class="room-detail-content-other-room">
-            <div class="room-detail-content-other-header">이 공인중개사의 다른 방</div>
+            <div class="room-detail-content-other-header">공인중개사의 다른 방</div>
             <KeepRoomContent v-if="roomLists" :roomLists="roomLists" />
           </div>
         </div>

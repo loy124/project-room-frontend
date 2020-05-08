@@ -1,5 +1,6 @@
 import axios from 'axios';
 const DOMAIN = 'http://localhost:8081/api/';
+// const DOMAIN = 'http://13.124.254.43:8081/api/';
 
 // 일반 URlParams 요청하기
 export const request = (method, url, data) => {
